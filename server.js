@@ -13,20 +13,13 @@ app.post("/api/getMyStocks", async function (req, res, next) {
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + 'client/build'));
-  // Express serve up index.html file if it doesn't recognize route
-  const path = require('path');
-  // app.get('*', (req, res) => {
-  //   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  // });
-  app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
 
-  // Handles any requests that don't match the ones above
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'client/build')));
+  // Handle React routing, return all requests to React app
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
   });
 }
 
