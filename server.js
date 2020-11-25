@@ -1,16 +1,20 @@
 const express = require('express');
+const getDailyStocksChange = require("./scraper");
+var bodyParser = require('body-parser')
 
 const app = express();
 
-app.get('/api/customers', (req, res) => {
-  const customers = [
-    {id: 1, firstName: 'John', lastName: 'Doe'},
-    {id: 2, firstName: 'Brad', lastName: 'Traversy'},
-    {id: 3, firstName: 'Mary', lastName: 'Swanson'},
-  ];
+app.use(bodyParser.json());
 
-  res.json(customers);
+app.post("/api/getMyStocks", async function (req, res, next) {
+  const result = await getDailyStocksChange(req.body);
+  return res.send(result)
 });
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jade');
+app.use(express.static(__dirname + './client/public'));
+
 
 const port = 5000;
 
