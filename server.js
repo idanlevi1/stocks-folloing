@@ -13,9 +13,9 @@ app.post("/api/getMyStocks", async function (req, res, next) {
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-app.use(express.static(__dirname + './client/public'));
+app.use(express.static(__dirname + './client/build'));
 
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => `Server running on port ${port}`);
