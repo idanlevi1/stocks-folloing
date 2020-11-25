@@ -25,8 +25,7 @@ yarn client
 
 ### Author
 
-Idan Levi
-[Idan Levi](https://github.com/idanlevi1)
+Idan Levi [GitHub](https://github.com/idanlevi1)
 
 ### Version
 
