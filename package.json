@@ -10,7 +10,7 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "heroku-postbuild": "yarn && cd client && yarn && yarn build"
+    "heroku-postbuild": "cd client && yarn --only=dev && yarn && npm run build"
   },
   "author": "Brad Traversy",
   "license": "MIT",
