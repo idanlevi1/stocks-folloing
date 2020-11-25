@@ -51,7 +51,10 @@ export default class stocksForm extends Component {
                 fullStocks.push(stock)
             }
         })
-        this.setState({ myStocks: fullStocks.length > 0 ? fullStocks : [{}] }, () => localStorage.setItem('myStocks', JSON.stringify(this.state.myStocks)))
+        this.setState({ myStocks: fullStocks.length > 0 ? fullStocks : [{}] }, () => {
+            localStorage.setItem('myStocks', JSON.stringify(this.state.myStocks))
+            alert('התיק נערך בהצלחה')
+        })
     }
 
     render() {
