@@ -14,7 +14,7 @@ app.post("/api/getMyStocks", async function (req, res, next) {
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + './client/build'));
+  app.use(express.static(__dirname + 'client/build'));
   // Express serve up index.html file if it doesn't recognize route
   const path = require('path');
   app.get('*', (req, res) => {
