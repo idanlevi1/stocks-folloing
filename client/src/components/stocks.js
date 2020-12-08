@@ -32,8 +32,8 @@ class Stocks extends Component {
         }
         const totalDailyChange = stocks.reduce((a, b) => ({ dailyMoneyChange: a.dailyMoneyChange + b.dailyMoneyChange })).dailyMoneyChange
         const totalDailyChangeText = `----------- Total Daily Change: ${totalDailyChange.toFixed(2)}₪ ${totalDailyChange > 0 ? '✅' : '❌'} -----------`
-        let newHistoryDailyChanges = JSON.parse(localStorage.getItem('historyDailyChanges') || '[]')
-        if (newHistoryDailyChanges.pop().dailyChange != totalDailyChange.toFixed(2)) {
+        let newHistoryDailyChanges = JSON.parse(localStorage.getItem('historyDailyChanges')) || []
+        if (newHistoryDailyChanges.length == 0 || newHistoryDailyChanges[newHistoryDailyChanges.length - 1].dailyChange != totalDailyChange.toFixed(2)) {
           newHistoryDailyChanges.push({ date: new Date().toJSON().slice(0, 11), dailyChange: totalDailyChange.toFixed(2) })
           localStorage.setItem(`historyDailyChanges`, JSON.stringify(newHistoryDailyChanges))
         }

@@ -149,7 +149,7 @@ function App() {
       </div>
       {getContent()}
       <div style={{ marginTop: 100 }} />
-      <div class="footer">
+      <div className="footer">
         <p>Powered by <a className='footer-a' href='https://github.com/idanlevi1'>Idan Levi <img className='footer-icon' src="https://img.icons8.com/cute-clipart/64/000000/github.png" /></a> </p>
       </div>
     </div>
