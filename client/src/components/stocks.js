@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './stocks.css';
+import { getColor } from '../Tools';
 
 class Stocks extends Component {
   constructor() {
@@ -34,7 +35,8 @@ class Stocks extends Component {
         const totalDailyChangeText = `----------- Total Daily Change: ${totalDailyChange.toFixed(2)}₪ ${totalDailyChange > 0 ? '✅' : '❌'} -----------`
         let newHistoryDailyChanges = JSON.parse(localStorage.getItem('historyDailyChanges')) || []
         if (newHistoryDailyChanges.length == 0 || newHistoryDailyChanges[newHistoryDailyChanges.length - 1].dailyChange != totalDailyChange.toFixed(2)) {
-          newHistoryDailyChanges.push({ date: new Date().toJSON().slice(0, 11), dailyChange: totalDailyChange.toFixed(2) })
+          const totalValueOfAllStocks = stocks.map(s => s.newValue).reduce((a, b) => a + b, 0).toFixed(2)
+          newHistoryDailyChanges.push({ date: new Date().toJSON().slice(0, 11), dailyChange: totalDailyChange.toFixed(2), totalValue: totalValueOfAllStocks })
           localStorage.setItem(`historyDailyChanges`, JSON.stringify(newHistoryDailyChanges))
         }
         this.setState({ stocks, totalDailyChangeText, historyDailyChanges: newHistoryDailyChanges }, () => console.log('Customers fetched...', stocks))
@@ -85,7 +87,7 @@ class Stocks extends Component {
                     <td>{newValue}</td>
                     <td>{currentPrice}</td>
                     <td style={{ color: +dailyMoneyChange > 0 ? 'green' : 'red', direction: 'ltr' }}>{dailyMoneyChange.toFixed(2)}</td>
-                    <td style={{ color: +dailyChange.replace(/%/g, '') > 0 ? 'green' : 'red', direction: 'ltr' }}>{dailyChange}</td>
+                    <td style={{ color: getColor(+dailyChange.replace(/%/g, '')), direction: 'ltr' }}>{dailyChange}</td>
                     <td>{name}</td>
                     <td>{stockId}</td>
                   </tr>
@@ -94,7 +96,7 @@ class Stocks extends Component {
             </table>
             <h4>{this.state.totalDailyChangeText}</h4>
             <p>---History----</p>
-            {this.uniqBy(this.state.historyDailyChanges, 'date').map((change, i) => <p>{`${change.date} |  ${change.dailyChange}`}</p>)}
+            {this.uniqBy(this.state.historyDailyChanges, 'date').reverse().map((change, i) => <p>{`${change.date} | Daily change: ${change.dailyChange} | Total value: ${change.totalValue || '-'}`}</p>)}
           </div>
           :
           <p>Loading...</p>}
